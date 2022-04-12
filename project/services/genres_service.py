@@ -4,8 +4,8 @@ from project.schemas.genre import GenreSchema
 from project.services.base import BaseService
 
 
-class GenresService(BaseService):
-    def get_item_by_id(self, pk):
+class GenreService(BaseService):
+    def get_item_by_id(self, pk: int):
         genre = GenreDAO(self._db_session).get_by_id(pk)
         if not genre:
             raise ItemNotFound

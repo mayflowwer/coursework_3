@@ -1,3 +1,5 @@
+from sqlalchemy import desc
+
 from project.dao.models.user import User
 
 
@@ -8,8 +10,11 @@ class UserDAO:
     def get_one(self, user_id):
         return self.session.query(User).get(user_id)
 
-    def get_all(self):
-        return self.session.query(User).all()
+    def get_all(self, page=0, limit=12):
+        if page == 0:
+            return self.session.query(User).all()
+        elif page != 0:
+            return self.session.query(User).offset(page*limit).all()
 
     def create(self, data: dict):
         new_user = User(**data)
