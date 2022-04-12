@@ -15,6 +15,9 @@ class UserService(BaseService):
         users = self.user_dao.get_all()
         return UserSchema.dump(users)
 
+    def get_by_email(self, email):
+        user = self.user_dao.get_by_email(email)
+
     def create(self, data: dict):
         return self.user_dao.create(data)
 

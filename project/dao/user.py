@@ -16,6 +16,9 @@ class UserDAO:
         elif page != 0:
             return self.session.query(User).offset(page*limit).all()
 
+    def get_by_email(self, email):
+        return self.session.query(User).filter(User.email == email).first()
+
     def create(self, data: dict):
         new_user = User(**data)
         self.session.add(new_user)
