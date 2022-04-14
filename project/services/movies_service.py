@@ -9,11 +9,11 @@ class MovieService(BaseService):
 
     def get_one(self, movie_id: int):
         movie = self.movie_dao.get_one(movie_id)
-        return MovieSchema.dump(movie)
+        return movie
 
-    def get_all(self, page=0, status=None):
-        movies = self.movie_dao.get_all(page=page, status=status)
-        return MovieSchema.dump(movies)
+    def get_all(self, page, status):
+        movies = self.movie_dao.get_all(page, status)
+        return movies
 
     def create(self, data: dict):
         return self.movie_dao.create(data)

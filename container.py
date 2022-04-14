@@ -7,14 +7,15 @@ from project.services.directors_service import DirectorService
 from project.services.genres_service import GenreService
 from project.services.movies_service import MovieService
 from project.services.users_service import UserService
+from project.setup_db import db
 
-genre_dao = GenreDAO()
-movie_dao = MovieDAO()
-director_dao = DirectorDAO()
-user_dao = UserDAO()
+genre_dao = GenreDAO(session=db.session)
+movie_dao = MovieDAO(session=db.session)
+director_dao = DirectorDAO(session=db.session)
+user_dao = UserDAO(session=db.session)
 
-genres_service = GenreService(dao=genre_dao)
-movie_service = MovieService(dao=movie_dao)
-director_service = DirectorService(dao=director_dao)
-user_service = UserService(dao=user_dao)
-auth_service = AuthService()
+genre_service = GenreService(genre_dao)
+movie_service = MovieService(movie_dao)
+director_service = DirectorService(director_dao)
+user_service = UserService(user_dao)
+auth_service = AuthService(user_service)

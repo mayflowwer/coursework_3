@@ -4,6 +4,8 @@ from flask_restx import Api
 
 from project.setup_db import db
 from project.views import genres_ns
+from project.views.directors import directors_ns
+from project.views.movies import movies_ns
 from project.views.users import users_ns
 
 api = Api(

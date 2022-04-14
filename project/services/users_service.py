@@ -9,11 +9,11 @@ class UserService(BaseService):
 
     def get_one(self, user_id: int):
         user = self.user_dao.get_one(user_id)
-        return UserSchema.dump(user)
+        return user
 
     def get_all(self):
         users = self.user_dao.get_all()
-        return UserSchema.dump(users)
+        return users
 
     def get_by_email(self, email):
         user = self.user_dao.get_by_email(email)

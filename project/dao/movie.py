@@ -10,13 +10,14 @@ class MovieDAO:
     def get_one(self, movie_id):
         return self.session.query(Movie).get(movie_id)
 
-    def get_all(self, page=0, limit=12, status=None):
-        if page == 0 and status is None:
+    def get_all(self, page=0, status=None):
+        items_amount = 12
+        if page is None and status is None:
             return self.session.query(Movie).all()
-        elif page != 0 and status is None:
-            return self.session.query(Movie).offset(page*limit).all()
-        elif page != 0 and status == 'new':
-            return self.session.query(Movie).order_by(desc(Movie.year)).offset(page*limit).all()
+        elif page and status is None:
+            return self.session.query(Movie).limit(items_amount).offset(items_amount*(int(page)-1)).all()
+        elif page and status == 'new':
+            return self.session.query(Movie).order_by(desc(Movie.year)).offset(items_amount*(int(page)-1)).all()
 
     def create(self, data):
         new_movie = Movie(**data)

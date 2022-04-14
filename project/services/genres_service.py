@@ -5,12 +5,22 @@ from project.services.base import BaseService
 
 
 class GenreService(BaseService):
-    def get_item_by_id(self, pk: int):
-        genre = GenreDAO(self._db_session).get_by_id(pk)
-        if not genre:
-            raise ItemNotFound
-        return GenreSchema().dump(genre)
+    def __init__(self, genre_dao: GenreDAO):
+        self.genre_dao = genre_dao
 
-    def get_all_genres(self):
-        genres = GenreDAO(self._db_session).get_all()
-        return GenreSchema(many=True).dump(genres)
+    def get_one(self, genre_id: int):
+        genre = self.genre_dao.get_one(genre_id)
+        return genre
+
+    def get_all(self, page=0):
+        genres = self.genre_dao.get_all(page=page)
+        return genres
+
+    def create(self, data: dict):
+        return self.genre_dao.create(data)
+
+    def update(self, genre_id: int, data: dict):
+        return self.genre_dao.update(genre_id, data)
+
+    def delete(self, genre_id: int):
+        return self.genre_dao.delete(genre_id)

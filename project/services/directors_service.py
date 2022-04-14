@@ -9,11 +9,11 @@ class DirectorService(BaseService):
 
     def get_one(self, director_id: int):
         director = self.director_dao.get_one(director_id)
-        return DirectorSchema.dump(director_id)
+        return director
 
     def get_all(self, page=0):
-        directors = self.director_dao.get_all(page=page)
-        return DirectorSchema.dump(directors)
+        directors = self.director_dao.get_all(page)
+        return directors
 
     def create(self, data: dict):
         return self.director_dao.create(data)

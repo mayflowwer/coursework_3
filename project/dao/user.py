@@ -10,11 +10,12 @@ class UserDAO:
     def get_one(self, user_id):
         return self.session.query(User).get(user_id)
 
-    def get_all(self, page=0, limit=12):
-        if page == 0:
+    def get_all(self, page=0):
+        items_amount = 12
+        if page is None:
             return self.session.query(User).all()
-        elif page != 0:
-            return self.session.query(User).offset(page*limit).all()
+        else:
+            return self.session.query(User).limit(items_amount).offset(items_amount*(int(page)-1)).all()
 
     def get_by_email(self, email):
         return self.session.query(User).filter(User.email == email).first()

@@ -8,11 +8,12 @@ class DirectorDAO:
     def get_one(self, director_id):
         return self.session.query(Director).get(director_id)
 
-    def get_all(self, page=0, limit=12):
-        if page == 0:
+    def get_all(self, page=0):
+        items_amount = 12
+        if page is None:
             return self.session.query(Director).all()
-        elif page != 0:
-            return self.session.query(Director).offset(page*limit).all()
+        else:
+            return self.session.query(Director).limit(items_amount).offset(items_amount*(int(page)-1)).all()
 
     def create(self, data):
         new_director = Director(**data)
