@@ -1,3 +1,5 @@
+from sqlalchemy.exc import IntegrityError
+
 from project.dao.user import UserDAO
 from project.schemas.user import UserSchema
 from project.services.base import BaseService
@@ -17,9 +19,13 @@ class UserService(BaseService):
 
     def get_by_email(self, email):
         user = self.user_dao.get_by_email(email)
+        return user
 
     def create(self, data: dict):
-        return self.user_dao.create(data)
+        try:
+            self.user_dao.create(data)
+        except IntegrityError as e:
+            return e
 
     def update(self, user_id: int, data: dict):
         return self.user_dao.update(user_id, data)
