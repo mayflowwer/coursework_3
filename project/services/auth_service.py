@@ -6,10 +6,11 @@ import jwt
 from flask import current_app
 from flask_restx import abort
 
+from project.services.base import BaseService
 from project.services.users_service import UserService
 
 
-class AuthService:
+class AuthService(BaseService):
     def __init__(self, user_service: UserService):
         self.user_service = user_service
 
@@ -43,13 +44,13 @@ class AuthService:
         }
         return self.generate_tokens(data)
 
-    def make_hash(self, password: str):
-        return hashlib.pbkdf2_hmac(
-            hash_name="sha256",
-            password=password.encode("utf-8"),
-            salt=current_app.config["PWD_HASH_SALT"],
-            iterations=current_app.config["PWD_HASH_ITERATIONS"],
-        )
-
-    def compare_hash(self, password: str, hashed_password: str):
-        return True if password == hashed_password else False
+    # def make_hash(self, password: str):
+    #     return hashlib.pbkdf2_hmac(
+    #         hash_name="sha256",
+    #         password=password.encode("utf-8"),
+    #         salt=current_app.config["PWD_HASH_SALT"],
+    #         iterations=current_app.config["PWD_HASH_ITERATIONS"],
+    #     )
+    #
+    # def compare_hash(self, password: str, hashed_password: str):
+    #     return True if password == hashed_password else False
