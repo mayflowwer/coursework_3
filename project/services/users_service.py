@@ -44,6 +44,3 @@ class UserService(BaseService):
             return self.update(user_id, data)
         else:
             abort(400)
-
-    def get_favorites_by_user_id(self, user_id):
-        return self.user_dao.get_favorites_by_user_id(user_id)
